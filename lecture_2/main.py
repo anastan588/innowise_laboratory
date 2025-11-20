@@ -16,7 +16,7 @@ current_age = current_year - birth_year
 
 hobbies = []
 while True:
-    hobby = input("Enter a favourite hobby or type 'stop' to finish: ")
+    hobby = input("Enter a favorite hobby or type 'stop' to finish: ")
     if hobby.lower() == "stop":
         break
     hobbies.append(hobby)
