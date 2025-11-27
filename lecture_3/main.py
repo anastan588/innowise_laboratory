@@ -6,9 +6,9 @@ def validate_name(name: str):
         raise ValueError("Name cannot be empty or just spaces.")
 
     for idx, ch in enumerate(name):
-        if not (ch.isalpha() or ch.isspace()):
+        if not (ch.isascii() and (ch.isalpha() or ch.isspace())):
             raise ValueError(
-                "Name must contain only letters and spaces."
+                "Name must contain only English letters (A–Z, a–z) and spaces."
             )
     return True
 
@@ -25,14 +25,14 @@ def add_student():
 
         for idx, student in enumerate(students):
             if student["name"].lower() == name.lower():
-                print(f"Student '{name}' already exists!  Returning to main menu...")
+                print(f"Student '{name}' already exists!")
                 return  
 
         students.append({"name": name, "grades": []})
         print(f"Student '{name.title()}' added successfully!")
 
     except ValueError as e:
-        print(f"Invalid input: {e}. Returning to main menu...")
+        print(f"Invalid input: {e}.")
         return
     except Exception as e:
         print(f"Unexpected error: {e}")
@@ -68,7 +68,7 @@ def add_grade():
                     except Exception as e:
                         print(f"Unexpected error: {e}")
 
-        print(f"Student '{name}' not found. Please add them first")
+        print(f"Student '{name.title()}' not found. Please add them first")
         return
 
     except Exception as e:
