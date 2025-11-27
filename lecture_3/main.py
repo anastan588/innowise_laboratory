@@ -153,9 +153,10 @@ def print_menu():
         "Find the top student",
         "Exit program"
     ]
-    for idx, option in enumerate(menu_options, start=1):
-        print(f"{idx}. {option}")
+    numbers = range(1, len(menu_options) + 1)
 
+    for num, option in zip(numbers, menu_options):
+        print(f"{num}. {option}")
 
 while True:
     print_menu()
