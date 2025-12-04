@@ -1,16 +1,16 @@
 CREATE TABLE IF NOT EXISTS students (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     full_name TEXT NOT NULL,
-    birth_year INTEGER,
+    birth_year INTEGER NOT NULL,
     CONSTRAINT unique_student UNIQUE (full_name, birth_year)
 
 );
 
 CREATE TABLE IF NOT EXISTS grades (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    student_id INTEGER,
+    student_id INTEGER NOT NULL,
     subject TEXT NOT NULL,
-    grade INTEGER CHECK(grade BETWEEN 1 AND 100),
+    grade INTEGER NOT NULL CHECK(grade BETWEEN 1 AND 100),
     FOREIGN KEY (student_id) REFERENCES students(id),
     CONSTRAINT unique_grade UNIQUE (student_id, subject)
 );
