@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from book_api import models, schemas, database
 
 models.Base.metadata.create_all(bind=database.engine)
@@ -34,7 +34,13 @@ def create_book(book: schemas.BookCreate, db: Session = Depends(get_db)):
         db.commit()
         db.refresh(db_book)
         return db_book
-
+    
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(
+            status_code=400,
+            detail="Book with this title and author already exists"
+        )
     except SQLAlchemyError as e:
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
     except Exception as e:
